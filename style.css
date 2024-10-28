@@ -37,19 +37,23 @@ nav ul{
     justify-content: center;
     align-items: center;
 }
-.box:hover{
+.box:active{
     background-color: #859F3D;
 }
 .gameInfo{
     padding: 0 34px;
 }
 .img-box img{
-    display: none;
+    width: 0;
+}
+#info{
+    font-size: 25px;
 }
 #reset{
     color: #1A1A19;
     background-color: #859F3D;
     padding: 10px 20px;
+    margin: 5px 10px;
     cursor: pointer;
     border-radius: 5px;
     border: none;
@@ -69,4 +73,19 @@ nav ul{
 }
 .bb-0{
     border-bottom: 0;
+}
+@media  screen and (max-width: 900px) {
+    .gameContainer{
+        flex-wrap: wrap;
+    }
+    .gameInfo{
+        margin-top: 34px;
+    }
+    .gameInfo h1{
+        font-size: 1.5rem;
+    }
+    .container{
+        grid-template-rows: repeat(3,15vw);
+        grid-template-columns: repeat(3,15vw);
+    }
 }
