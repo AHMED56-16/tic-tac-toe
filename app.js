@@ -1,9 +1,7 @@
-let music = new Audio("./Assets/music.mp3");
-let ting = new Audio("./Assets/ting.mp3");
-let gameOver = new Audio("./Assets/gameOver.mp3");
+let ting = new Audio("ting.mp3");
+let gameOver = new Audio("gameover.mp3");
 let turn = "X";
 let isGameOver = false;
-
 let changeTurn = function () {
     return turn === "X" ? "O" : "X";
 };
@@ -11,14 +9,14 @@ let changeTurn = function () {
 let checkWin = function() {
     let boxText = document.getElementsByClassName("box-text");
     let winningCombinations = [
-        [0, 1, 2],
-        [3, 4, 5],
-        [6, 7, 8],
-        [0, 3, 6],
-        [1, 4, 7],
-        [2, 5, 8],
-        [0, 4, 8],
-        [2, 4, 6]
+        [0, 1, 2, 5, 5, 0],  // Row 1
+        [3, 4, 5, 5, 15, 0], // Row 2
+        [6, 7, 8, 5, 25, 0], // Row 3
+        [0, 3, 6, -5, 15, 90], // Column 1
+        [1, 4, 7, 5, 15, 90],  // Column 2
+        [2, 5, 8, 15, 15, 90], // Column 3
+        [0, 4, 8, 5, 15, 45],  // Diagonal 1
+        [2, 4, 6, 5, 15, 135]   // Diagonal 2
     ];
 
     for (let i = 0; i < winningCombinations.length; i++) {
@@ -28,12 +26,16 @@ let checkWin = function() {
             boxText[combination[0]].innerHTML !== "") {
             document.getElementById("info").innerHTML = boxText[combination[0]].innerHTML + " WON!";
             isGameOver = true;
-            music.play();
-            document.querySelector(".img-box img").style.width = "200px"; // Show winner image
+            gameOver.play();
+            document.querySelector(".img-box img").style.width = "200px";
+            const line = document.querySelector(".line");
+            line.style.display = "block";
+            document.querySelector(".line").style.transform = `translate(${combination[3]}vw, ${combination[4]}vw) rotate(${combination[5]}deg)`;
             break; 
         }
     }
 };
+
 
 let resetGame = function() {
     let boxText = document.getElementsByClassName("box-text");
@@ -43,9 +45,8 @@ let resetGame = function() {
     turn = "X";
     isGameOver = false;
     document.getElementById("info").innerHTML = "Turn for X";
-    document.querySelector(".img-box img").style.width = "0"; // Hide image after reset
-    music.currentTime = 0; // Reset music playback
-    music.pause(); // Pause music if it was playing
+    document.querySelector(".img-box img").style.width = "0"; 
+    document.querySelector(".line").style.display = "none";
 };
 
 let boxes = document.getElementsByClassName("box");
